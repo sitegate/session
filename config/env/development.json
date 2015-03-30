@@ -1,0 +1,4 @@
+{
+  "mongodbURL": "mongodb://localhost/sitegate-session-dev",
+  "amqpURL": "amqp://guest:guest@localhost:5672"
+}
