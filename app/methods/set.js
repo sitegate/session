@@ -24,12 +24,14 @@ module.exports = function (sid, session, options, cb) {
     s.lastModified = new Date();
   }
 
+  // shouldn't resave session that was intentionally removed
+  var upsert = !s.data.isExisting;
+  delete s.data.isExisting;
+
   Session.update({
     _id: sid
   }, s, {
-    upsert: true,
+    upsert: upsert,
     safe: true
-  }, function (err) {
-    cb(err);
-  });
+  }, cb);
 };
