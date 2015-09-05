@@ -2,7 +2,9 @@
 
 var Session = require('../../models/session');
 
-module.exports = function (sid, session, options, cb) {
+module.exports = function(sid, session, options, cb) {
+  console.log('set called');
+
   var s = {
     data: session
   };
