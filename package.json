@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sitegate/sitegate-session.git"
+    "url": "git://github.com/sitegate/session.git"
   },
   "license": "MIT",
   "dependencies": {
