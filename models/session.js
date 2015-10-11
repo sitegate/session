@@ -1,4 +1,3 @@
-/* jshint node:true */
 'use strict';
 
 /**
@@ -18,4 +17,6 @@ var SessionSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Session', SessionSchema);
+module.exports = function(connection) {
+  return connection.model('Session', SessionSchema);
+};

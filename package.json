@@ -2,7 +2,7 @@
   "name": "sitegate-session",
   "version": "0.0.0",
   "description": "Session microservice for SiteGate",
-  "main": "app.js",
+  "main": "./lib/index.js",
   "author": {
     "name": "Zoltan Kochan",
     "email": "zoltan.kochan@gmail.com",
@@ -14,8 +14,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "convict": "^1.0.1",
-    "mongoose": "^4.1.6",
-    "uva-amqp": "^0.4.0"
+    "mongoose": "^4.1.6"
   }
 }
