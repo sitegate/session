@@ -1,34 +1,19 @@
 'use strict';
 
 module.exports = function(ms) {
-  var Session = ms.models.Session;
+  let Session = ms.models.Session;
 
-  return function(sid, session, options, cb) {
-    console.log('set called');
+  return function(sid, session, cb) {
+    /* shouldn't resave session that was intentionally removed */
+    let upsert = !session.isExisting;
 
-    var s = {
-      data: session
+    let s = {
+      data: session,
+      expires: session.expires,
+      lastModified: new Date(),
     };
 
-    if (session && session.cookie && session.cookie.expires) {
-      s.expires = new Date(session.cookie.expires);
-    } else {
-      // If there's no expiration date specified, it is
-      // browser-session cookie or there is no cookie at all,
-      // as per the connect docs.
-      //
-      // So we set the expiration to two-weeks from now
-      // - as is common practice in the industry (e.g Django) -
-      // or the default specified in the options.
-      s.expires = new Date(Date.now() + options.ttl * 1000);
-    }
-
-    if (options.touchAfter > 0) {
-      s.lastModified = new Date();
-    }
-
-    // shouldn't resave session that was intentionally removed
-    var upsert = !s.data.isExisting;
+    delete s.data.expires;
     delete s.data.isExisting;
 
     Session.update({
