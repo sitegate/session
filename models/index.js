@@ -1,17 +1,22 @@
-'use strict';
+'use strict'
+const debug = require('debug')('sitegate:session')
+const mongoose = require('mongoose')
 
-var mongoose = require('mongoose');
+module.exports = function(service, opts, next) {
+  if (!opts.mongoURI)
+    return next(new Error('mongoURI is required'))
 
-module.exports = function(mongoURI) {
-  var connection = mongoose.createConnection(mongoURI);
+  let connection = mongoose.createConnection(opts.mongoURI)
 
-  connection.on('connected', function() {
-    console.log('Mongoose connected in Session microservice');
-  });
+  connection.on('connected', () => debug('Mongoose connected in Session microservice'))
 
-  var models = {
-    Session: require('./session')(connection)
-  };
+  service.expose({
+    Session: require('./session')(connection),
+  })
 
-  return models;
-};
+  next()
+}
+
+module.exports.attributes = {
+  name: 'models',
+}

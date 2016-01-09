@@ -1,22 +1,15 @@
-'use strict';
+'use strict'
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-/**
- * Module dependencies.
- */
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-
-/**
- * Session Schema
- */
-var SessionSchema = new Schema({
+let SessionSchema = new Schema({
   _id: String,
   data: {},
   expires: {
-    type: Date
-  }
-});
+    type: Date,
+  },
+})
 
 module.exports = function(connection) {
-  return connection.model('Session', SessionSchema);
-};
+  return connection.model('Session', SessionSchema)
+}
