@@ -21,7 +21,7 @@ server
       register: require('./app/methods/destroy'),
     },
     {
-      register: require('./app/methods/destroyByUserId'),
+      register: require('./app/methods/destroy-by-user-id'),
     },
     {
       register: require('./app/methods/get'),
