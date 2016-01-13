@@ -1,7 +1,7 @@
 'use strict'
 const joi = require('joi')
 
-module.exports = function(ms, opts, next) {
+module.exports = function(ms, opts) {
   let Session = ms.plugins.models.Session;
 
   ms.method({
@@ -11,14 +11,12 @@ module.exports = function(ms, opts, next) {
         sid: joi.string().required(),
       },
     },
-    handler(params, cb) {
-      Session.remove({
+    handler(params) {
+      return Session.remove({
         _id: params.sid,
-      }, cb);
+      })
     },
   })
-
-  next()
 }
 
 module.exports.attributes = {

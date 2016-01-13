@@ -12,7 +12,7 @@ module.exports = function(ms, opts, next) {
         session: joi.object().required(),
       },
     },
-    handler(params, cb) {
+    handler(params) {
       /* shouldn't resave session that was intentionally removed */
       let upsert = !params.session.isExisting
 
@@ -25,12 +25,12 @@ module.exports = function(ms, opts, next) {
       delete s.data.expires
       delete s.data.isExisting
 
-      Session.update({
+      return Session.update({
         _id: params.sid,
       }, s, {
         upsert: upsert,
         safe: true,
-      }, cb)
+      })
     },
   })
 

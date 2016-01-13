@@ -1,7 +1,7 @@
 'use strict'
 const joi = require('joi')
 
-module.exports = function(ms, opts, next) {
+module.exports = function(ms, opts) {
   let Session = ms.plugins.models.Session
 
   ms.method({
@@ -11,14 +11,10 @@ module.exports = function(ms, opts, next) {
         sid: joi.string().required(),
       },
     },
-    handler(params, cb) {
-      Session.findById(params.sid, function(err, s) {
-        if (err) {
-          return cb(err)
-        }
-        if (!s) {
-          return cb()
-        }
+    handler(params) {
+      return Session.findById(params.sid).exec().then(s => {
+        if (!s)
+          return Promise.resolve()
 
         s.data = s.data || {}
 
@@ -28,12 +24,10 @@ module.exports = function(ms, opts, next) {
         // were deleted.
         s.data.isExisting = true
 
-        cb(null, s.data)
+        return Promise.resolve(s.data)
       })
     },
   })
-
-  next()
 }
 
 module.exports.attributes = {
