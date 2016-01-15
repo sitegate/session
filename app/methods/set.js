@@ -1,11 +1,11 @@
 'use strict'
 const joi = require('joi')
 
-module.exports = function(ms, opts, next) {
-  let Session = ms.models.Session
+module.exports = function(ms, opts) {
+  let Session = ms.plugins.models.Session
 
   ms.method({
-    name: 'destroy',
+    name: 'set',
     config: {
       validate: {
         sid: joi.string().required(),
@@ -31,12 +31,13 @@ module.exports = function(ms, opts, next) {
         upsert: upsert,
         safe: true,
       })
+      .then(raw => {
+        return Promise.resolve(raw.upserted[0])
+      })
     },
   })
-
-  next()
 }
 
 module.exports.attributes = {
-  name: 'destroy',
+  name: 'set',
 }
