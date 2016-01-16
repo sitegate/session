@@ -31,9 +31,7 @@ module.exports = function(ms, opts) {
         upsert: upsert,
         safe: true,
       })
-      .then(raw => {
-        return Promise.resolve(raw.upserted[0])
-      })
+      .then(raw => Promise.resolve())
     },
   })
 }
