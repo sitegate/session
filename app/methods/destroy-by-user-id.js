@@ -5,10 +5,11 @@ module.exports = function(ms, opts) {
   let Session = ms.plugins.models.Session
 
   ms.method({
-    name: 'destroy-by-user-id',
+    name: 'destroyByUserId',
     config: {
       validate: {
         userId: joi.string().required(),
+        exceptId: joi.string(),
       },
     },
     handler(params) {
